@@ -21,8 +21,18 @@ class MoviesController < ApplicationController
     if @current_ratings == {}
       @current_ratings = Hash[@all_ratings.map{|rating| [rating,rating]}]
     end
+    if session[:ratings] != params[:ratings] && @current_ratings != {}
+      session[:sort] = sort
+      session[:ratings] = @current_ratings
+      flash.keep
+      redirect_to :sort => sort, :ratings => @current_ratings and return
+    end
+    if session[:sort] != params[:sort]
+      session[:sort] = params[:sort]
+      flash.keep
+      redirect_to :sort => sort, :ratings => @current_ratings and return
+    end
     @movies = Movie.where(rating: @current_ratings.keys).order(sort)
-    
   end
   def new
     # default: render 'new' template
