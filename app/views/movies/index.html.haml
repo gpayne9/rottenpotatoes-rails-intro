@@ -9,7 +9,7 @@
     = rating
     = check_box_tag "ratings[#{rating}]" , 1, true
   = submit_tag 'Refresh', {:id => "ratings_submit"}
-  
+  = hidden_field_tag 'reset', true
 %table#movies
   %thead
     %tr
